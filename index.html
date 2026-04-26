@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Puchu My Whole World 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --crimson: #8b1a2e;
+  --rose: #c0415a;
+  --blush: #e8778a;
+  --petal: #f4b8c4;
+  --gold: #c9a050;
+  --gold-light: #e8c97a;
+  --deep: #0d0608;
+  --dark: #120a0d;
+  --mid: #1e0f14;
+  --panel: #1a0c11;
+  --panel2: #221019;
+  --ink: #f0d8dd;
+  --soft: #c09098;
+  --muted: #7a5560;
+  --cream: #f7e8ec;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--deep);
+  font-family:'Cormorant Garamond',serif;
+  color:var(--ink);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── Cursor ── */
+.cursor{
+  position:fixed;width:14px;height:14px;
+  background:var(--rose);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:screen;
+  transition:width .2s,height .2s;
+}
+.cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1px solid rgba(192,65,90,0.5);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:all .15s ease;
+}
+
+/* ── Progress ── */
+.progress{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--crimson),var(--gold),var(--rose));
+  z-index:300;transition:width .1s;
+}
+
+/* ── Floating particles ── */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{
+  position:absolute;border-radius:50%;
+  animation:particleDrift linear infinite;
+  opacity:0;
+}
+@keyframes particleDrift{
+  0%{opacity:0;transform:translateY(110vh) translateX(0) scale(0);}
+  10%{opacity:.6;}
+  90%{opacity:.2;}
+  100%{opacity:0;transform:translateY(-10vh) translateX(40px) scale(1.2);}
+}
+
+/* ── Grain overlay ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:400;opacity:.5;
+}
+
+/* ── Nav dots ── */
+.chapter-nav{
+  position:fixed;right:1.2rem;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;z-index:100;
+}
+.nav-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(192,65,90,0.2);
+  border:1px solid rgba(192,65,90,0.4);
+  cursor:pointer;transition:all .3s;position:relative;
+}
+.nav-dot.active,.nav-dot:hover{
+  background:var(--rose);
+  box-shadow:0 0 12px rgba(192,65,90,0.6);
+  transform:scale(1.4);
+}
+.nav-dot::after{
+  content:attr(data-label);
+  position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  font-size:.6rem;color:var(--soft);white-space:nowrap;
+  opacity:0;transition:opacity .2s;
+  font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;
+  background:rgba(18,10,13,.9);padding:3px 8px;border-radius:3px;
+  border:1px solid rgba(192,65,90,0.2);
+}
+.nav-dot:hover::after{opacity:1;}
+
+/* ══════════════ COVER ══════════════ */
+#cover{
+  position:relative;height:100svh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;overflow:hidden;z-index:2;
+  background:radial-gradient(ellipse 80% 70% at 50% 40%, #2a0a13 0%, #0d0608 60%, #080305 100%);
+}
+.cover-ornament{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 40% 40% at 20% 20%, rgba(139,26,46,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 80% 80%, rgba(201,160,80,.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(139,26,46,.07) 0%, transparent 70%);
+}
+.cover-border{
+  position:absolute;inset:1.5rem;
+  border:1px solid rgba(192,65,90,0.15);
+  border-radius:2px;pointer-events:none;
+}
+.cover-border::before{
+  content:'';position:absolute;inset:-4px;
+  border:1px solid rgba(201,160,80,.08);
+  border-radius:2px;
+}
+.corner{
+  position:absolute;width:40px;height:40px;
+  border-color:rgba(201,160,80,0.3);border-style:solid;
+}
+.corner.tl{top:2rem;left:2rem;border-width:1px 0 0 1px;}
+.corner.tr{top:2rem;right:2rem;border-width:1px 1px 0 0;}
+.corner.bl{bottom:2rem;left:2rem;border-width:0 0 1px 1px;}
+.corner.br{bottom:2rem;right:2rem;border-width:0 1px 1px 0;}
+
+.locket-ring{
+  width:clamp(140px,28vw,200px);
+  height:clamp(140px,28vw,200px);
+  border-radius:50%;
+  border:2px solid var(--rose);
+  box-shadow:0 0 0 6px rgba(139,26,46,.15),0 0 40px rgba(192,65,90,.3),0 0 80px rgba(192,65,90,.1);
+  overflow:hidden;
+  margin-bottom:2rem;
+  position:relative;
+  animation:locketAppear 1.2s cubic-bezier(.34,1.56,.64,1) .2s both;
+}
+.locket-ring::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 50%);
+  pointer-events:none;
+}
+.locket-ring img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s ease;
+}
+.locket-ring:hover img{transform:scale(1.08);}
+
+/* Fallback if cover.jpg missing */
+.locket-ring img[src="cover.jpg"]{
+  background:linear-gradient(135deg,#2a0a13,#1a0c11);
+}
+
+@keyframes locketAppear{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
+
+.cover-eyebrow{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--gold);opacity:.7;margin-bottom:1rem;
+  animation:fadeUp .8s .6s both;
+}
+.cover-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(3rem,11vw,6.5rem);
+  color:var(--petal);line-height:1.05;
+  animation:fadeUp 1s .8s both;
+  text-shadow:0 0 60px rgba(192,65,90,.4);
+}
+.cover-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.9rem,2.5vw,1.15rem);
+  color:var(--soft);font-style:italic;
+  margin-top:.8rem;
+  animation:fadeUp .8s 1s both;
+  max-width:400px;
+  line-height:1.6;
+}
+.cover-date{
+  margin-top:.8rem;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--gold);
+  animation:fadeUp .8s 1.2s both;
+}
+.scroll-hint{
+  position:absolute;bottom:2rem;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  animation:fadeUp .8s 1.6s both;
+  color:var(--muted);font-size:.65rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  font-family:'Josefin Sans',sans-serif;
+}
+.scroll-hint svg{animation:scrollBounce 1.5s ease-in-out infinite;}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════════════ PHOTO WALL ══════════════ */
+#photowall{
+  min-height:100svh;
+  background:linear-gradient(170deg,#0f0609 0%,#150b10 50%,#0d0608 100%);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:5rem 1.5rem;position:relative;z-index:2;overflow:hidden;
+}
+.photowall-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(2rem,6vw,3.5rem);
+  color:var(--petal);margin-bottom:.5rem;text-align:center;
+}
+.photowall-sub{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.65rem;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:3rem;text-align:center;opacity:.6;
+}
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1rem;
+  width:100%;max-width:900px;
+}
+.photo-slot{
+  aspect-ratio:4/5;
+  border-radius:4px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  border:1px solid rgba(192,65,90,0.2);
+  background:linear-gradient(135deg,#1a0c11,#120a0d);
+  transition:transform .4s ease,box-shadow .4s ease;
+}
+.photo-slot:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 20px 50px rgba(139,26,46,.5);
+  border-color:rgba(192,65,90,0.5);
+}
+.photo-slot img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s;
+  display:block;
+}
+.photo-slot:hover img{transform:scale(1.05);}
+.photo-slot-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(13,6,8,.8) 0%,transparent 50%);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:flex-end;padding:.8rem;
+}
+.photo-slot:hover .photo-slot-overlay{opacity:1;}
+.photo-slot-caption{
+  font-size:.7rem;color:var(--petal);
+  font-family:'Josefin Sans',sans-serif;
+  letter-spacing:.08em;
+}
+.photo-slot.large{
+  grid-column:span 2;
+  grid-row:span 2;
+  aspect-ratio:auto;
+  min-height:320px;
+}
+
+/* Lightbox */
+.lightbox{
+  position:fixed;inset:0;
+  background:rgba(8,3,5,.96);
+  z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.lightbox.open{opacity:1;pointer-events:all;}
+.lightbox img{
+  max-width:90vw;max-height:90vh;
+  object-fit:contain;border-radius:4px;
+  box-shadow:0 30px 80px rgba(0,0,0,.8);
+}
+.lightbox-close{
+  position:absolute;top:1.5rem;right:1.5rem;
+  width:40px;height:40px;
+  border:1px solid rgba(192,65,90,.4);border-radius:50%;
+  background:transparent;color:var(--rose);
+  font-size:1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.lightbox-close:hover{background:rgba(192,65,90,.15);}
+
+/* ══════════════ CHAPTERS ══════════════ */
+.chapter{
+  min-height:100svh;
+  position:relative;display:flex;
+  align-items:center;justify-content:center;
+  padding:5rem 1.5rem;z-index:2;overflow:hidden;
+}
+.chapter-inner{
+  max-width:660px;width:100%;
+  opacity:0;transform:translateY(50px);
+  transition:opacity 1s ease,transform 1s ease;
+}
+.chapter-inner.visible{opacity:1;transform:translateY(0);}
+
+.chapter-num{
+  display:block;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.6rem;letter-spacing:.35em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:.6rem;opacity:.7;
+}
+.chapter-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(2.2rem,7vw,3.8rem);
+  color:var(--petal);line-height:1.1;
+  margin-bottom:.5rem;
+  text-shadow:0 0 40px rgba(192,65,90,.25);
+}
+.divider{
+  display:flex;align-items:center;gap:1rem;
+  margin:1.2rem 0;
+}
+.divider::before,.divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,transparent,rgba(192,65,90,.3),transparent);
+}
+.divider span{color:var(--rose);font-size:.9rem;opacity:.7;}
+.chapter-body{
+  font-size:clamp(.95rem,2.2vw,1.08rem);
+  line-height:1.95;color:var(--ink);
+  font-weight:300;
+}
+.chapter-body p{margin-bottom:1.1rem;}
+.chapter-body em{color:var(--petal);font-style:italic;}
+.chapter-body strong{color:var(--gold-light);font-weight:600;}
+
+#ch1{background:linear-gradient(160deg,#120a0d 0%,#0f0609 100%);}
+#ch2{background:linear-gradient(160deg,#0d0b12 0%,#100810 100%);}
+#ch3{background:linear-gradient(160deg,#0a0d0f 0%,#0d0a12 100%);}
+#ch4{background:linear-gradient(160deg,#0d0a08 0%,#100a0d 100%);}
+#ch5{background:linear-gradient(160deg,#08100d 0%,#0d0810 100%);}
+#ch6{background:linear-gradient(160deg,#100d08 0%,#0d0810 100%);}
+
+.big-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:7rem;line-height:.5;
+  color:rgba(192,65,90,.08);
+  position:absolute;left:-1rem;top:.5rem;
+  pointer-events:none;user-select:none;
+  font-weight:300;
+}
+
+/* Bubbles */
+.chat-wrap{display:flex;flex-direction:column;gap:.8rem;margin:1.4rem 0;}
+.bubble{
+  max-width:82%;padding:.9rem 1.2rem;
+  border-radius:16px;
+  font-size:.9rem;line-height:1.55;
+  font-family:'Josefin Sans',sans-serif;
+  font-weight:300;
+}
+.bubble.him{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px 16px 16px 3px;
+  align-self:flex-start;color:var(--ink);
+  backdrop-filter:blur(10px);
+}
+.bubble.her{
+  background:linear-gradient(135deg,rgba(139,26,46,.6),rgba(192,65,90,.4));
+  border:1px solid rgba(192,65,90,.3);
+  border-radius:16px 16px 3px 16px;
+  align-self:flex-end;color:var(--cream);
+  backdrop-filter:blur(10px);
+}
+.bubble-name{
+  font-size:.55rem;text-transform:uppercase;
+  letter-spacing:.15em;opacity:.5;margin-bottom:.3rem;
+  color:var(--gold);
+}
+
+/* Timeline */
+.timeline{position:relative;padding-left:2.2rem;margin:1.4rem 0;}
+.timeline::before{
+  content:'';position:absolute;left:.6rem;top:0;bottom:0;
+  width:1px;background:linear-gradient(to bottom,var(--rose),transparent);
+}
+.tl-item{position:relative;margin-bottom:1.4rem;}
+.tl-dot{
+  position:absolute;left:-1.9rem;top:.3rem;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--crimson);border:2px solid var(--rose);
+  box-shadow:0 0 10px rgba(192,65,90,.4);
+}
+.tl-time{
+  font-size:.62rem;color:var(--gold);
+  letter-spacing:.15em;text-transform:uppercase;
+  font-family:'Josefin Sans',sans-serif;
+}
+.tl-text{font-size:.95rem;color:var(--ink);line-height:1.7;margin-top:.2rem;}
+
+/* Clock widget */
+.clock-widget{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(192,65,90,.2);
+  border-radius:8px;padding:1.2rem 1.5rem;
+  display:inline-flex;align-items:center;gap:1rem;
+  margin:1rem 0;backdrop-filter:blur(10px);
+  animation:pulseGlow 3s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 0 20px rgba(192,65,90,.1);}
+  50%{box-shadow:0 0 40px rgba(192,65,90,.3);}
+}
+.clock-time{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:1.4rem;font-weight:200;
+  color:var(--petal);letter-spacing:.1em;
+}
+
+/* Books */
+.book-stack{display:flex;gap:.6rem;align-items:flex-end;margin:1.4rem 0;flex-wrap:wrap;}
+.book{
+  width:34px;border-radius:2px 6px 6px 2px;
+  position:relative;cursor:pointer;
+  transition:transform .3s ease;
+  box-shadow:2px 4px 12px rgba(0,0,0,.5);
+}
+.book:hover{transform:translateY(-10px) rotate(-3deg);}
+.book::after{
+  content:'';position:absolute;left:3px;top:0;bottom:0;
+  width:4px;background:rgba(255,255,255,.15);border-radius:1px;
+}
+
+/* Paws */
+.paw-trail{display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0;align-items:center;}
+.paw{font-size:1.4rem;animation:pawBounce .7s ease-in-out infinite;opacity:.7;}
+.paw:nth-child(2){animation-delay:.1s;}
+.paw:nth-child(3){animation-delay:.2s;}
+.paw:nth-child(4){animation-delay:.3s;}
+.paw:nth-child(5){animation-delay:.15s;}
+@keyframes pawBounce{0%,100%{transform:scale(1)rotate(0);}50%{transform:scale(1.3)rotate(12deg);}}
+
+/* Heartbeat */
+.heartbeat{display:flex;align-items:center;gap:.8rem;margin:1.4rem 0;}
+.hb-label{
+  font-size:.62rem;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;
+  font-family:'Josefin Sans',sans-serif;
+  white-space:nowrap;
+}
+.hb-line{flex:1;height:44px;position:relative;overflow:hidden;}
+.hb-line svg{width:100%;height:100%;}
+
+/* Day counter */
+.day-counter{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(201,160,80,.2);
+  border-radius:8px;padding:1.4rem 1.6rem;
+  margin:1.2rem 0;backdrop-filter:blur(10px);
+}
+.day-num{
+  font-family:'Cinzel Decorative',serif;
+  font-size:3.5rem;color:var(--rose);
+  line-height:1;letter-spacing:.05em;
+  text-shadow:0 0 30px rgba(192,65,90,.4);
+}
+.day-label{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);
+  margin-top:.3rem;opacity:.6;
+}
+
+/* Admiration card */
+.adm-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(192,65,90,.15);
+  border-radius:6px;padding:1.3rem 1.5rem;
+  margin:.8rem 0;position:relative;overflow:hidden;
+  transition:border-color .3s;
+}
+.adm-card:hover{border-color:rgba(192,65,90,.4);}
+.adm-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:linear-gradient(to bottom,var(--rose),var(--crimson));
+}
+.adm-icon{font-size:1.4rem;margin-bottom:.5rem;display:block;}
+.adm-title{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:.4rem;
+}
+.adm-text{font-size:.95rem;color:var(--ink);line-height:1.7;}
+
+/* ══════════════ FINALE ══════════════ */
+#finale{
+  min-height:100svh;
+  background:radial-gradient(ellipse 90% 80% at 50% 50%,#200a12 0%,#0d0608 60%,#080305 100%);
+  display:flex;align-items:center;justify-content:center;
+  padding:5rem 1.5rem;position:relative;overflow:hidden;z-index:2;
+}
+.finale-inner{max-width:600px;width:100%;text-align:center;}
+.finale-inner .chapter-title{font-size:clamp(2.5rem,9vw,5rem);color:var(--petal);}
+.finale-inner .chapter-body{color:var(--soft);}
+.finale-inner em{color:var(--petal);}
+
+.stars-bg{position:absolute;inset:0;pointer-events:none;}
+.star{
+  position:absolute;border-radius:50%;
+  background:white;animation:twinkle ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.1;transform:scale(1);}
+  50%{opacity:.8;transform:scale(1.5);}
+}
+.heart-big{
+  font-size:clamp(3.5rem,13vw,7rem);
+  animation:heartPulse 1.2s ease-in-out infinite;
+  display:block;margin:1.8rem auto;
+  filter:drop-shadow(0 0 30px rgba(192,65,90,.6));
+}
+@keyframes heartPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+.finale-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.4rem,4vw,2rem);
+  color:var(--petal);line-height:1.55;
+  font-style:italic;font-weight:300;
+  margin:1.5rem 0;
+}
+.finale-sign{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(1.5rem,5vw,2.5rem);
+  color:var(--rose);margin-top:1.5rem;
+}
+
+.celebrate-btn{
+  margin-top:2rem;
+  padding:1rem 2.5rem;
+  background:transparent;
+  color:var(--petal);
+  border:1px solid rgba(192,65,90,.4);
+  border-radius:50px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
+  cursor:pointer;
+  transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.celebrate-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(139,26,46,.6),rgba(192,65,90,.4));
+  opacity:0;transition:opacity .3s;
+}
+.celebrate-btn:hover{border-color:rgba(192,65,90,.8);letter-spacing:.25em;}
+.celebrate-btn:hover::before{opacity:1;}
+.celebrate-btn span{position:relative;z-index:1;}
+
+/* Confetti */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:50;}
+
+@media(max-width:640px){
+  .chapter-nav{right:.5rem;}
+  .nav-dot::after{display:none;}
+  .photo-grid{grid-template-columns:repeat(2,1fr);}
+  .photo-slot.large{grid-column:span 2;min-height:240px;}
+  .big-quote{font-size:4rem;}
+  .day-num{font-size:2.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="progress" id="progress"></div>
+<div class="particles" id="particles"></div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt=""/>
+</div>
+
+<!-- Nav -->
+<nav class="chapter-nav" id="chapterNav">
+  <div class="nav-dot active" data-target="cover" data-label="Begin"></div>
+  <div class="nav-dot" data-target="photowall" data-label="My Gallery"></div>
+  <div class="nav-dot" data-target="ch1" data-label="Chapter I"></div>
+  <div class="nav-dot" data-target="ch2" data-label="Chapter II"></div>
+  <div class="nav-dot" data-target="ch3" data-label="Chapter III"></div>
+  <div class="nav-dot" data-target="ch4" data-label="Chapter IV"></div>
+  <div class="nav-dot" data-target="ch5" data-label="Chapter V"></div>
+  <div class="nav-dot" data-target="ch6" data-label="Chapter VI"></div>
+  <div class="nav-dot" data-target="finale" data-label="Always"></div>
+</nav>
+
+<!-- ══════════ COVER ══════════ -->
+<!--
+  📸 COVER PHOTO:
+  Put your image in the same folder as index.html and name it: cover.jpg
+  (or change "cover.jpg" below to your actual filename)
+-->
+<section id="cover">
+  <div class="cover-ornament"></div>
+  <div class="cover-border"></div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <div class="locket-ring" onclick="openLightbox('cover.jpg')">
+    <img src="/cover.jpg.jpeg" alt="Puchu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+    <div style="display:none;width:100%;height:100%;background:linear-gradient(135deg,#2a0a13,#1a0c11);align-items:center;justify-content:center;flex-direction:column;gap:.5rem;color:var(--rose);font-size:2rem;">
+      🌸
+      <small style="font-size:.6rem;color:var(--muted);font-family:'Josefin Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:0 8px;line-height:1.5;">Replace cover.jpg<br/>with your photo</small>
+    </div>
+  </div>
+
+  <div class="cover-eyebrow">26 April · A Love Story</div>
+ <div class="cover-title">
+  For Puchu,<br>
+  My Whole World
+</div>
+  <!-- <div class="cover-sub">"Written in late-night calls, 9 AM greetings,<br/>and every quiet moment in between."</div> -->
+  <div class="cover-date">Four months · Counting forever ❤</div>
+
+  <div class="scroll-hint">
+    <span>Read our story</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════════ PHOTO WALL ══════════ -->
+<!--
+  📸 GALLERY PHOTOS:
+  Put your images in the same folder as index.html.
+  Name them: photo1.jpg, photo2.jpg ... photo8.jpg
+  (or change the src values below to your actual filenames)
+
+  SLOT 0  → photo1.jpg  (large, favourite photo)
+  SLOT 1  → photo2.jpg
+  SLOT 2  → photo3.jpg
+  SLOT 3  → photo4.jpg
+  SLOT 4  → photo5.jpg
+  SLOT 5  → photo6.jpg
+  SLOT 6  → photo7.jpg
+  SLOT 7  → photo8.jpg
+  SLOT 8  → photo9.jpg
+-->
+<section id="photowall">
+  <h2 class="photowall-title">My Gallery</h2>
+  <p class="photowall-sub">Every photo of you is a treasure ✦</p>
+
+  <div class="photo-grid">
+
+    <!-- Slot 0 large favourite -->
+    <div class="photo-slot large" onclick="openLightbox('photo1.jpg')">
+      <img src="/photo1.jpeg" alt="My favourite"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">📸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo1.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">My favourite 🌸</span></div>
+    </div>
+
+    <!-- Slot 1 -->
+    <div class="photo-slot" onclick="openLightbox('photo2.jpg')">
+      <img src="/photo2.jpeg" alt="Beautiful"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">🌸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo2.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">Beautiful 💕</span></div>
+    </div>
+
+    <!-- Slot 2 -->
+    <div class="photo-slot" onclick="openLightbox('photo3.jpg')">
+      <img src="/photo3.jpeg" alt="Gorgeous"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">🌸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo3.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">Gorgeous 🌹</span></div>
+    </div>
+
+    <!-- Slot 3 -->
+    <div class="photo-slot" onclick="openLightbox('photo4.jpg')">
+      <img src="/photo4.jpeg" alt="My sunshine"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">🌸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo4.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">My sunshine ☀️</span></div>
+    </div>
+
+    <!-- Slot 4 -->
+    <div class="photo-slot" onclick="openLightbox('photo5.jpg')">
+      <img src="/photo5.jpeg" alt="Perfect"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">🌸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo5.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">Perfect 💖</span></div>
+    </div>
+
+    <!-- Slot 5 -->
+    <div class="photo-slot" onclick="openLightbox('photo6.jpg')">
+      <img src="/photo6.jpeg" alt="Dream"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">🌸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo6.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">Dream 🌙</span></div>
+    </div>
+
+    <!-- Slot 6 -->
+    <div class="photo-slot" onclick="openLightbox('photo7.jpg')">
+      <img src="/photo7.jpeg" alt="Healing hands"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">🌸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo7.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">Healing hands ✨</span></div>
+    </div>
+
+    <!-- Slot 7 -->
+    <div class="photo-slot" onclick="openLightbox('photo8.jpg')">
+      <img src="/photo8.jpeg" alt="So lovely"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">🌸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo8.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">So lovely 🌺</span></div>
+    </div>
+
+    <!-- Slot 8 -->
+    <div class="photo-slot" onclick="openLightbox('photo9.jpg')">
+      <img src="/photo9.jpeg" alt="My world"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
+        <span style="font-size:1.8rem;">🌸</span>
+        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo9.jpg</small>
+      </div>
+      <div class="photo-slot-overlay"><span class="photo-slot-caption">My world 🌎</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ CH 1 ══════════ -->
+<section id="ch1" class="chapter">
+  <div class="chapter-inner">
+    <span class="chapter-num">Chapter I</span>
+    <h2 class="chapter-title">The Voice Before the Face</h2>
+    <div class="divider"><span>🌸</span></div>
+    <div class="chapter-body" style="position:relative">
+      <div class="big-quote">"</div>
+
+      <p>We have never shared a meal. Never held hands. Never tasted a kiss or felt each other's warmth in a hug. And yet  <em>I love you so much.</em> Not despite the distance. Not in spite of what we lack. But purely, completely, because of who you are the person who makes my heart full without ever being in the same room.</p>
+
+      <p>From Kolkata, I write code all day sitting with my screens and coffee, building things. From Bhubaneswar, you restore people, one gentle session at a time. Two different worlds, two different silences, connected by one thin line of light across the internet. <strong>And somehow, that line holds everything.</strong></p>
+
+      <div class="adm-card">
+        <span class="adm-icon">🎙️</span>
+        <div class="adm-title">What I remember most</div>
+        <div class="adm-text">That first long call I wasn't expecting it to go that way. You started talking and I realised I had forgotten to breathe normally. Your voice is warm in a way that's hard to explain. <em>It sounds like safety.</em></div>
+      </div>
+
+      <div class="chat-wrap">
+        <div class="bubble him"><div class="bubble-name">Him · Kolkata 💻</div>Good night babe ♥️</div>
+        <div class="bubble her"><div class="bubble-name">Her · Bhubaneswar 🌸</div>Good night Abhi 💗</div>
+        <div class="bubble him"><div class="bubble-name">Him</div>♥️</div>
+        <div class="bubble her"><div class="bubble-name">Puchu</div>🫶🏻</div>
+      </div>
+
+      <p>That's how we end every day. Four simple exchanges. But in those words a universe. You are not someone you forget. You are <em>someone you choose to remember every single day</em>  and I choose it willingly, joyfully, every night before I close my eyes, and every morning before my alarm even goes off.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CH 2 ══════════ -->
+<section id="ch2" class="chapter">
+  <div class="chapter-inner">
+    <span class="chapter-num">Chapter II</span>
+    <h2 class="chapter-title">The Art of Waiting</h2>
+    <div class="divider"><span>⏰</span></div>
+    <div class="chapter-body" style="position:relative">
+      <div class="big-quote">"</div>
+      <p>Nobody talks about how <em>beautiful</em> waiting can be when you are waiting for the right person. I do not wait with dread I wait with this warm, quiet fullness, knowing that when your name lights up my screen, <strong>everything else in the world gets a little smaller.</strong></p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">9:00 AM</div>
+          <div class="tl-text">I call. Every morning. Before anything else before emails, before code, before coffee sometimes. You are my first thought and my first reason to smile. ☀️</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">After 1:00 PM</div>
+          <div class="tl-text">Your morning rush is done. We steal some minutes your patients finished, my pull requests waiting. Those minutes taste different from the rest of the day. 🏥💻</div>
+        </div>
+       <div class="tl-item">
+  <div class="tl-dot"></div>
+  <div class="tl-time">After 6:00 PM</div>
+  <div class="tl-text">Your clinic ends. My office ends. I head back to my PG, you chill with your friends and somehow, in between your laughter and my tired walk home, we still find each other. Every single evening. <em>That distance? It doesn't stand a chance.</em> 🌙</div>
+</div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">Video Call ✨</div>
+          <div class="tl-text">Your face on my screen. Every pixel precious. Every laugh more real than anything else in my apartment. I never want to be the one to press end call.</div>
+        </div>
+      </div>
+
+      <div class="clock-widget">
+        <span style="font-size:1.6rem;">📞</span>
+        <div>
+          <div class="clock-time" id="liveTime">--:--:--</div>
+          <div style="font-family:'Josefin Sans',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:.2rem;">Thinking of you right now</div>
+        </div>
+      </div>
+
+      <p>One message from you changes the entire temperature of my day. That is not an exaggeration. <em>That is simply what you do to me.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CH 3 ══════════ -->
+<section id="ch3" class="chapter">
+  <div class="chapter-inner">
+    <span class="chapter-num">Chapter III</span>
+    <h2 class="chapter-title">She Who Heals & She Who Reads</h2>
+    <div class="divider"><span>📚</span></div>
+    <div class="chapter-body" style="position:relative">
+      <div class="big-quote">"</div>
+
+      <p>You spend your days healing people stroke patients, tired bodies, fragile movements. You give so much of yourself. Not because you have to. <em>Because that's just who you are.</em></p>
+
+      <div class="adm-card">
+        <span class="adm-icon">🩺</span>
+        <div class="adm-title">What amazes me about you</div>
+        <div class="adm-text">You're a physiotherapist. You fix what's broken. And you do it with such gentle hands. <em>You heal everyone except yourself and maybe that's where I come in.</em> Because when I look at you, I don't just see a doctor. I see someone soft, someone kind, someone who deserves to be held too. And I want to be that person for you.</div>
+      </div>
+
+      <div class="adm-card">
+        <span class="adm-icon">📖</span>
+        <div class="adm-title">The reader in you</div>
+        <div class="adm-text">You love reading. But not just anything <em>romance novels, dark romance, twisted love stories.</em> The ones where love isn't easy, where it hurts a little, where it consumes everything. You like stories with edges. And I think that's why you understand me. Because my love for you? It's not simple either. It's deep, intense, a little obsessive <strong>the kind they write books about.</strong> And I love that about you. You feel deeply. You love deeply. Even the dark parts.</div>
+      </div>
+
+      <div class="book-stack">
+        <div class="book" style="height:92px;background:linear-gradient(135deg,#8b1a2e,#c0415a)" title="Romance 💕"></div>
+        <div class="book" style="height:104px;background:linear-gradient(135deg,#1a0c11,#2d1a22)" title="Dark Romance 🖤"></div>
+        <div class="book" style="height:76px;background:linear-gradient(135deg,#c9a050,#e8c97a)" title="Twisted Love 🔥"></div>
+        <div class="book" style="height:88px;background:linear-gradient(135deg,#6b3a8a,#9b5de5)" title="Passion 💜"></div>
+        <div class="book" style="height:98px;background:linear-gradient(135deg,#8b1a2e,#f72585)" title="Our Story 💖"></div>
+      </div>
+      <div style="font-size:.6rem;color:var(--muted);font-family:'Josefin Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;">✦ The books you love ✦</div>
+
+      <p>You heal bodies during the day. And at night, you lose yourself in stories about love that burns. <em>You are soft and wild at the same time.</em> And that, Puchu <strong>that is why I'm completely yours.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CH 4 ══════════ -->
+<section id="ch4" class="chapter">
+  <div class="chapter-inner">
+    <span class="chapter-num">Chapter IV</span>
+    <h2 class="chapter-title">Dogs, Photos & Small Joys</h2>
+    <div class="divider"><span>🐾</span></div>
+    <div class="chapter-body" style="position:relative">
+      <div class="big-quote">"</div>
+
+      <p>You love dogs. Of course you do. <em>Of course</em> the person who is patient with broken bodies and careful with tired people also has all this tenderness left over for animals. It makes complete, beautiful sense.</p>
+
+      <div class="paw-trail">
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+      </div>
+
+      <div class="adm-card">
+        <span class="adm-icon">📸</span>
+        <div class="adm-title">The way you see yourself</div>
+        <div class="adm-text">You love taking your own photos. And honestly? <em>You're obsessed with yourself and I love that.</em> Because you should be. You're beautiful, and you know it. Every selfie, every pose, every angle you capture yourself the way the world should see you. And me? <strong>Every single photo you send makes my face smile and my heartbeat rise.</strong> </div>
+      </div>
+
+      <p>Maybe that is why I feel so seen. You noticed something in our conversations worth continuing. Worth returning to. <strong>Worth four months and every day after.</strong></p>
+
+      <div class="chat-wrap">
+        <div class="bubble her"><div class="bubble-name">Puchu 🌸</div>*sends a selfie*</div>
+        <div class="bubble him"><div class="bubble-name">Him 💻</div>I stopped breathing for a moment. 😭💕</div>
+        <div class="bubble her"><div class="bubble-name">Puchu 🌸</div>You're being so dramatic 😂❤️</div>
+        <div class="bubble him"><div class="bubble-name">Him</div>Not dramatic. Just honest. Every photo of you makes my heart beat faster. You're beautiful and you drive me crazy every single time.</div>
+      </div>
+
+      <p>From Jajpur Town to Bhubaneswar, everywhere you go <em>you carry yourself like a queen.</em> And every day, your photos travel across those 600 kilometres just to make my world a little brighter. <strong>Keep sending them. I'm never tired of seeing you.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CH 5 ══════════ -->
+<section id="ch5" class="chapter">
+  <div class="chapter-inner">
+    <span class="chapter-num">Chapter V</span>
+    <h2 class="chapter-title">A Software Engineer's Confession</h2>
+    <div class="divider"><span>💻</span></div>
+    <div class="chapter-body" style="position:relative">
+      <div class="big-quote">"</div>
+
+      <p>I write code for a living. I solve problems methodically. I build systems that have to make logical sense. Every bug has a reason. Every error has a fix. I live in a world that is, by design, <em>predictable.</em></p>
+      <p>Then there is you and none of those rules apply anymore.</p>
+
+      <div class="adm-card">
+        <span class="adm-icon">💓</span>
+        <div class="adm-title">Something I cannot explain</div>
+        <div class="adm-text">I have tried to debug this feeling. I cannot. There is no stack trace, no error log, no clear cause. There is just this <em>this constant, warm, running process in the background of everything I do.</em> And I have stopped wanting to fix it.</div>
+      </div>
+
+      <div class="heartbeat" id="heartbeatBar">
+        <span class="hb-label">💓</span>
+        <div class="hb-line">
+          <svg viewBox="0 0 300 44" preserveAspectRatio="none">
+            <polyline id="hbLine"
+              points="0,22 40,22 55,6 65,38 75,22 100,22 115,8 125,36 135,22 160,22 175,6 185,38 195,22 220,22 235,8 245,36 255,22 300,22"
+              fill="none" stroke="var(--rose)" stroke-width="2"
+              stroke-dasharray="800" stroke-dashoffset="800">
+              <animate attributeName="stroke-dashoffset" from="800" to="0" dur="2.5s" fill="freeze" begin="indefinite" id="hbAnim"/>
+            </polyline>
+          </svg>
+        </div>
+        <span class="hb-label">when I hear your voice</span>
+      </div>
+
+      <p>I wake up early every morning. Not because of an alarm. Not because I have to. <strong>Because I want to hear your voice.</strong> I wait for that moment when I call you and say "Good morning, my sunshine." I tell you to have breakfast. I know you won't listen. <em>But that's my job.</em> To remind you. To care for you. To be the first voice you hear. <strong>Till death. That is my promise.</strong> And when I hear your sleepy, beautiful voice on the other side that's when my day truly begins. Nothing else matters.</p>
+
+      <div class="adm-card">
+        <span class="adm-icon">🎓</span>
+        <div class="adm-title">What KIIT didn't teach me</div>
+        <div class="adm-text">Four years of engineering and I still didn't know what I wanted to build a life around. <em>You showed me.</em> You your laugh, your kindness, your way of caring about the world. That is the kind of architecture I want to spend my life on.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CH 6 ══════════ -->
+<section id="ch6" class="chapter">
+  <div class="chapter-inner">
+    <span class="chapter-num">Chapter VI</span>
+    <h2 class="chapter-title">26 April Every Day Feels New</h2>
+    <div class="divider"><span>🗓️</span></div>
+    <div class="chapter-body" style="position:relative">
+      <div class="big-quote">"</div>
+
+      <p>Four months. You said it yourself <em>every day feels new.</em> I have been thinking about that. About why that is.</p>
+      <p>I think it is because we are still discovering. We haven't exhausted each other. We haven't run out of things to wonder about. <strong>Every conversation adds a page. This story is still very much being written.</strong></p>
+
+      <div class="day-counter">
+        <div class="day-num" id="dayCount">—</div>
+        <div class="day-label">days of choosing each other</div>
+        <div style="margin-top:.8rem;font-size:.85rem;color:var(--muted);">Since December 26, 2024 · Morning calls, noon chats, evening laughs 📞</div>
+      </div>
+
+      <div class="adm-card">
+        <span class="adm-icon">✨</span>
+        <div class="adm-title">What I admire most</div>
+        <div class="adm-text">You work from 10 to 6, giving yourself to strangers who need you. And then you still have energy to give to me. You still listen, still laugh, still show up. <em>That is not small. That is one of the most generous things I have ever experienced.</em></div>
+      </div>
+
+      <p>You are from Jajpur Town a girl from Odisha who became a physiotherapist, who attends international conferences, who reads and loves dogs and takes photos and wears her softness like it costs her nothing <em>even though I know how much it takes to keep being kind in a world that doesn't always deserve it.</em></p>
+
+      <p><strong>I am the luckiest person on this planet.</strong> Not because of what I do or where I'm from. But because I have you standing by my side. I believe in you. I believe in us. And that <em>that makes me richer than anyone with any title.</em></p>
+    </div>
+  </div>
+</section>
+<!-- ══════════ FINALE ══════════ -->
+<section id="finale">
+  <div class="stars-bg" id="starsBg"></div>
+  <div class="finale-inner chapter-inner">
+    <span class="chapter-num" style="color:var(--gold);">Always</span>
+    <h2 class="chapter-title">My Whole World</h2>
+    <div class="divider"><span>✨</span></div>
+
+    <span class="heart-big">❤️</span>
+
+    <div class="finale-quote">
+      "You are the book I never want to finish.<br/>
+      The call I never want to hang up.<br/>
+      The <em>one notification</em> that changes everything."
+    </div>
+
+    <div class="chapter-body" style="font-size:clamp(.9rem,2vw,1rem);margin-top:1.5rem;">
+      <p>We have never met. And yet I have <em>never felt so known</em> by anyone.</p>
+      <p>One day, Kolkata and Bhubaneswar will not be the distance between us. One day, the 9 AM call will just be good morning face to face, no screen, no kilometres. <strong>I am holding onto that day.</strong></p>
+      <p>Until then <em>I will keep calling. I will keep waiting. I will keep choosing you, every single day, without hesitation.</em></p>
+    </div>
+
+    <div class="divider" style="margin:2.5rem 0;"><span>🌸</span></div>
+
+    <div class="finale-sign">
+      Happy 4 Months, Puchu.<br/>
+      You are my favourite story. 🌙
+    </div>
+
+    <div style="margin-top:1.2rem;font-family:'Josefin Sans',sans-serif;font-size:.6rem;letter-spacing:.2em;color:rgba(240,196,204,.3);text-transform:uppercase;">
+      Made with every bit of love I have · ABHI❤️
+    </div>
+
+    <button class="celebrate-btn" onclick="launchConfetti()">
+      <span>🎉 Celebrate With Me</span>
+    </button>
+  </div>
+</section>
+
+<script>
+/* ── Cursor ── */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=-100,my=-100,tx=-100,ty=-100;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function anim(){
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+  tx+=(mx-tx)*.12;ty+=(my-ty)*.12;
+  ring.style.left=tx+'px';ring.style.top=ty+'px';
+  requestAnimationFrame(anim);
+})();
+document.addEventListener('touchstart',()=>{cursor.style.display='none';ring.style.display='none';},{passive:true});
+
+/* ── Progress bar ── */
+window.addEventListener('scroll',()=>{
+  const pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight);
+  document.getElementById('progress').style.width=(pct*100)+'%';
+});
+
+/* ── Floating particles ── */
+const pcont=document.getElementById('particles');
+const pcols=['rgba(139,26,46,.5)','rgba(192,65,90,.4)','rgba(201,160,80,.3)','rgba(248,184,196,.4)'];
+for(let i=0;i<30;i++){
+  const p=document.createElement('div');p.className='particle';
+  const sz=2+Math.random()*4;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;background:${pcols[i%pcols.length]};animation-duration:${10+Math.random()*20}s;animation-delay:${Math.random()*20}s;`;
+  pcont.appendChild(p);
+}
+
+/* ── Stars (finale) ── */
+const sbg=document.getElementById('starsBg');
+for(let i=0;i<80;i++){
+  const s=document.createElement('div');s.className='star';
+  const sz=.5+Math.random()*2;
+  s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*5}s;animation-delay:${Math.random()*6}s;`;
+  sbg.appendChild(s);
+}
+
+/* ── Lightbox ── */
+const lb=document.getElementById('lightbox');
+const lbImg=document.getElementById('lightboxImg');
+function openLightbox(src){
+  lbImg.src=src;
+  lb.classList.add('open');
+}
+function closeLightbox(){lb.classList.remove('open');}
+lb.addEventListener('click',e=>{if(e.target===lb)closeLightbox();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+
+/* ── Live clock ── */
+setInterval(()=>{
+  document.getElementById('liveTime').textContent=new Date().toLocaleTimeString('en-IN');
+},1000);
+document.getElementById('liveTime').textContent=new Date().toLocaleTimeString('en-IN');
+
+/* ── Day counter (since Dec 26 2024) ── */
+const days=Math.floor((new Date()-new Date('2024-12-26'))/(864e5));
+document.getElementById('dayCount').textContent=days;
+
+/* ── Intersection Observer: animate chapters + nav dots ── */
+const sections=document.querySelectorAll('#cover,.chapter,#finale,#photowall');
+const navDots=document.querySelectorAll('.nav-dot');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.querySelectorAll('.chapter-inner').forEach(el=>el.classList.add('visible'));
+      const id=entry.target.id;
+      navDots.forEach(d=>d.classList.toggle('active',d.dataset.target===id));
+      if(id==='ch5'){
+        setTimeout(()=>{
+          const a=document.getElementById('hbAnim');if(a)a.beginElement();
+        },700);
+      }
+    }
+  });
+},{threshold:.25});
+sections.forEach(s=>obs.observe(s));
+
+/* ── Nav dot clicks ── */
+navDots.forEach(d=>{
+  d.addEventListener('click',()=>{
+    document.getElementById(d.dataset.target)?.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* ── Confetti ── */
+function launchConfetti(){
+  const wrap=document.getElementById('confettiWrap');
+  const colors=['#8b1a2e','#c0415a','#c9a050','#e8778a','#f4b8c4','#e8c97a'];
+  for(let i=0;i<150;i++){
+    const c=document.createElement('div');
+    c.style.cssText=`position:absolute;left:${15+Math.random()*70}vw;top:${45+Math.random()*15}vh;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};opacity:1;`;
+    wrap.appendChild(c);
+    const angle=Math.random()*Math.PI*2;
+    const spd=80+Math.random()*220;
+    c.animate([
+      {opacity:1,transform:'translate(0,0) rotate(0deg)'},
+      {opacity:0,transform:`translate(${Math.cos(angle)*spd}px,${Math.sin(angle)*spd-180}px) rotate(${Math.random()*720}deg)`}
+    ],{duration:1200+Math.random()*900,easing:'cubic-bezier(.1,.8,.3,1)',fill:'forwards'})
+    .onfinish=()=>c.remove();
+  }
+}
+
+/* ── Touch ripple ── */
+document.addEventListener('touchstart',e=>{
+  const t=e.touches[0];
+  const rip=document.createElement('div');
+  rip.style.cssText=`position:fixed;left:${t.clientX}px;top:${t.clientY}px;width:40px;height:40px;border-radius:50%;background:rgba(192,65,90,.2);pointer-events:none;z-index:9999;transform:translate(-50%,-50%) scale(0);`;
+  document.body.appendChild(rip);
+  rip.animate([
+    {transform:'translate(-50%,-50%) scale(0)',opacity:1},
+    {transform:'translate(-50%,-50%) scale(3)',opacity:0}
+  ],{duration:600,easing:'ease-out',fill:'forwards'}).onfinish=()=>rip.remove();
+},{passive:true});
+</script>
+</body>
+</html>
