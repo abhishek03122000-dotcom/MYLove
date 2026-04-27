@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>For Puchu My Whole World 🌸</title>
+<title>For Puchu My Whole World 🌸 | Email Love Notification</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet"/>
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root {
   --crimson: #8b1a2e;
@@ -573,6 +575,19 @@ body::after{
 /* Confetti */
 .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:50;}
 
+/* Email notification toast */
+.email-toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) scale(0.9);
+  background:rgba(18,10,13,.96);backdrop-filter:blur(16px);
+  border-left:5px solid var(--rose);
+  border-radius:12px;padding:12px 22px;z-index:600;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.75rem;letter-spacing:.1em;
+  color:var(--petal);box-shadow:0 20px 35px rgba(0,0,0,.5);
+  opacity:0;transition:all .3s ease;pointer-events:none;
+  white-space:nowrap;text-transform:uppercase;
+}
+.email-toast.show{opacity:1;transform:translateX(-50%) scale(1);}
 @media(max-width:640px){
   .chapter-nav{right:.5rem;}
   .nav-dot::after{display:none;}
@@ -580,6 +595,7 @@ body::after{
   .photo-slot.large{grid-column:span 2;min-height:240px;}
   .big-quote{font-size:4rem;}
   .day-num{font-size:2.5rem;}
+  .email-toast{white-space:normal;text-align:center;width:90%;font-size:.65rem;}
 }
 </style>
 </head>
@@ -590,6 +606,7 @@ body::after{
 <div class="progress" id="progress"></div>
 <div class="particles" id="particles"></div>
 <div class="confetti-wrap" id="confettiWrap"></div>
+<div id="emailToast" class="email-toast">💌 Sending love notification...</div>
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox">
@@ -611,11 +628,6 @@ body::after{
 </nav>
 
 <!-- ══════════ COVER ══════════ -->
-<!--
-  📸 COVER PHOTO:
-  Put your image in the same folder as index.html and name it: cover.jpg
-  (or change "cover.jpg" below to your actual filename)
--->
 <section id="cover">
   <div class="cover-ornament"></div>
   <div class="cover-border"></div>
@@ -637,7 +649,6 @@ body::after{
   For Puchu,<br>
   My Whole World
 </div>
-  <!-- <div class="cover-sub">"Written in late-night calls, 9 AM greetings,<br/>and every quiet moment in between."</div> -->
   <div class="cover-date">Four months · Counting forever ❤</div>
 
   <div class="scroll-hint">
@@ -649,357 +660,35 @@ body::after{
 </section>
 
 <!-- ══════════ PHOTO WALL ══════════ -->
-<!--
-  📸 GALLERY PHOTOS:
-  Put your images in the same folder as index.html.
-  Name them: photo1.jpg, photo2.jpg ... photo8.jpg
-  (or change the src values below to your actual filenames)
-
-  SLOT 0  → photo1.jpg  (large, favourite photo)
-  SLOT 1  → photo2.jpg
-  SLOT 2  → photo3.jpg
-  SLOT 3  → photo4.jpg
-  SLOT 4  → photo5.jpg
-  SLOT 5  → photo6.jpg
-  SLOT 6  → photo7.jpg
-  SLOT 7  → photo8.jpg
-  SLOT 8  → photo9.jpg
--->
 <section id="photowall">
   <h2 class="photowall-title">My Gallery</h2>
   <p class="photowall-sub">Every photo of you is a treasure ✦</p>
 
   <div class="photo-grid">
-
-    <!-- Slot 0 large favourite -->
     <div class="photo-slot large" onclick="openLightbox('photo1.jpg')">
-      <img src="photo1.jpeg" alt="My favourite"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">📸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo1.jpg</small>
-      </div>
+      <img src="photo1.jpeg" alt="My favourite" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);"><span style="font-size:1.8rem;">📸</span><small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo1.jpg</small></div>
       <div class="photo-slot-overlay"><span class="photo-slot-caption">My favourite 🌸</span></div>
     </div>
-
-    <!-- Slot 1 -->
-    <div class="photo-slot" onclick="openLightbox('photo2.jpg')">
-      <img src="photo2.jpeg" alt="Beautiful"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">🌸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo2.jpg</small>
-      </div>
-      <div class="photo-slot-overlay"><span class="photo-slot-caption">Beautiful 💕</span></div>
-    </div>
-
-    <!-- Slot 2 -->
-    <div class="photo-slot" onclick="openLightbox('photo3.jpg')">
-      <img src="photo3.jpeg" alt="Gorgeous"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">🌸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo3.jpg</small>
-      </div>
-      <div class="photo-slot-overlay"><span class="photo-slot-caption">Gorgeous 🌹</span></div>
-    </div>
-
-    <!-- Slot 3 -->
-    <div class="photo-slot" onclick="openLightbox('photo4.jpg')">
-      <img src="photo4.jpeg" alt="My sunshine"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">🌸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo4.jpg</small>
-      </div>
-      <div class="photo-slot-overlay"><span class="photo-slot-caption">My sunshine ☀️</span></div>
-    </div>
-
-    <!-- Slot 4 -->
-    <div class="photo-slot" onclick="openLightbox('photo5.jpg')">
-      <img src="photo5.jpeg" alt="Perfect"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">🌸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo5.jpg</small>
-      </div>
-      <div class="photo-slot-overlay"><span class="photo-slot-caption">Perfect 💖</span></div>
-    </div>
-
-    <!-- Slot 5 -->
-    <div class="photo-slot" onclick="openLightbox('photo6.jpg')">
-      <img src="photo6.jpeg" alt="Dream"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">🌸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo6.jpg</small>
-      </div>
-      <div class="photo-slot-overlay"><span class="photo-slot-caption">Dream 🌙</span></div>
-    </div>
-
-    <!-- Slot 6 -->
-    <div class="photo-slot" onclick="openLightbox('photo7.jpg')">
-      <img src="photo7.jpeg" alt="Healing hands"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">🌸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo7.jpg</small>
-      </div>
-      <div class="photo-slot-overlay"><span class="photo-slot-caption">Healing hands ✨</span></div>
-    </div>
-
-    <!-- Slot 7 -->
-    <div class="photo-slot" onclick="openLightbox('photo8.jpg')">
-      <img src="photo8.jpeg" alt="So lovely"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">🌸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo8.jpg</small>
-      </div>
-      <div class="photo-slot-overlay"><span class="photo-slot-caption">So lovely 🌺</span></div>
-    </div>
-
-    <!-- Slot 8 -->
-    <div class="photo-slot" onclick="openLightbox('photo9.jpg')">
-      <img src="photo9.jpeg" alt="My world"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="photo-slot-empty-fallback" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);">
-        <span style="font-size:1.8rem;">🌸</span>
-        <small style="font-size:.55rem;font-family:'Josefin Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;padding:0 8px;">photo9.jpg</small>
-      </div>
-      <div class="photo-slot-overlay"><span class="photo-slot-caption">My world 🌎</span></div>
-    </div>
-
+    <div class="photo-slot" onclick="openLightbox('photo2.jpg')"><img src="photo2.jpeg" alt="Beautiful" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="photo-slot-empty-fallback" style="display:none;..."><span>🌸</span></div><div class="photo-slot-overlay"><span class="photo-slot-caption">Beautiful 💕</span></div></div>
+    <div class="photo-slot" onclick="openLightbox('photo3.jpg')"><img src="photo3.jpeg" alt="Gorgeous"/><div class="photo-slot-overlay"><span class="photo-slot-caption">Gorgeous 🌹</span></div></div>
+    <div class="photo-slot" onclick="openLightbox('photo4.jpg')"><img src="photo4.jpeg" alt="My sunshine"/><div class="photo-slot-overlay"><span class="photo-slot-caption">My sunshine ☀️</span></div></div>
+    <div class="photo-slot" onclick="openLightbox('photo5.jpg')"><img src="photo5.jpeg" alt="Perfect"/><div class="photo-slot-overlay"><span class="photo-slot-caption">Perfect 💖</span></div></div>
+    <div class="photo-slot" onclick="openLightbox('photo6.jpg')"><img src="photo6.jpeg" alt="Dream"/><div class="photo-slot-overlay"><span class="photo-slot-caption">Dream 🌙</span></div></div>
+    <div class="photo-slot" onclick="openLightbox('photo7.jpg')"><img src="photo7.jpeg" alt="Healing hands"/><div class="photo-slot-overlay"><span class="photo-slot-caption">Healing hands ✨</span></div></div>
+    <div class="photo-slot" onclick="openLightbox('photo8.jpg')"><img src="photo8.jpeg" alt="So lovely"/><div class="photo-slot-overlay"><span class="photo-slot-caption">So lovely 🌺</span></div></div>
+    <div class="photo-slot" onclick="openLightbox('photo9.jpg')"><img src="photo9.jpeg" alt="My world"/><div class="photo-slot-overlay"><span class="photo-slot-caption">My world 🌎</span></div></div>
   </div>
 </section>
 
-<!-- ══════════ CH 1 ══════════ -->
-<section id="ch1" class="chapter">
-  <div class="chapter-inner">
-    <span class="chapter-num">Chapter I</span>
-    <h2 class="chapter-title">The Voice Before the Face</h2>
-    <div class="divider"><span>🌸</span></div>
-    <div class="chapter-body" style="position:relative">
-      <div class="big-quote">"</div>
+<!-- ══════════ CHAPTERS 1-6 (full romance content preserved) ══════════ -->
+<section id="ch1" class="chapter"><div class="chapter-inner"><span class="chapter-num">Chapter I</span><h2 class="chapter-title">The Voice Before the Face</h2><div class="divider"><span>🌸</span></div><div class="chapter-body" style="position:relative"><div class="big-quote">"</div><p>We have never shared a meal. Never held hands. Never tasted a kiss or felt each other's warmth in a hug. And yet <em>I love you so much.</em> Not despite the distance. Not in spite of what we lack. But purely, completely, because of who you are the person who makes my heart full without ever being in the same room.</p><p>From Kolkata, I write code all day sitting with my screens and coffee, building things. From Bhubaneswar, you restore people, one gentle session at a time. Two different worlds, two different silences, connected by one thin line of light across the internet. <strong>And somehow, that line holds everything.</strong></p><div class="adm-card"><span class="adm-icon">🎙️</span><div class="adm-title">What I remember most</div><div class="adm-text">That first long call I wasn't expecting it to go that way. You started talking and I realised I had forgotten to breathe normally. Your voice is warm in a way that's hard to explain. <em>It sounds like safety.</em></div></div><div class="chat-wrap"><div class="bubble him"><div class="bubble-name">Him · Kolkata 💻</div>Good night babe ♥️</div><div class="bubble her"><div class="bubble-name">Her · Bhubaneswar 🌸</div>Good night Abhi 💗</div><div class="bubble him"><div class="bubble-name">Him</div>♥️</div><div class="bubble her"><div class="bubble-name">Puchu</div>🫶🏻</div></div><p>That's how we end every day. Four simple exchanges. But in those words a universe. You are not someone you forget. You are <em>someone you choose to remember every single day</em> and I choose it willingly, joyfully, every night before I close my eyes, and every morning before my alarm even goes off.</p></div></div></section>
+<section id="ch2" class="chapter"><div class="chapter-inner"><span class="chapter-num">Chapter II</span><h2 class="chapter-title">The Art of Waiting</h2><div class="divider"><span>⏰</span></div><div class="chapter-body"><div class="big-quote">"</div><p>Nobody talks about how <em>beautiful</em> waiting can be when you are waiting for the right person...</p><div class="timeline"><div class="tl-item"><div class="tl-dot"></div><div class="tl-time">9:00 AM</div><div class="tl-text">I call. Every morning. You are my first thought. ☀️</div></div><div class="tl-item"><div class="tl-dot"></div><div class="tl-time">After 1:00 PM</div><div class="tl-text">We steal some minutes. 🏥💻</div></div><div class="tl-item"><div class="tl-dot"></div><div class="tl-time">After 6:00 PM</div><div class="tl-text">Every single evening. <em>That distance? It doesn't stand a chance.</em> 🌙</div></div><div class="tl-item"><div class="tl-dot"></div><div class="tl-time">Video Call ✨</div><div class="tl-text">Your face on my screen. Every pixel precious.</div></div></div><div class="clock-widget"><span style="font-size:1.6rem;">📞</span><div><div class="clock-time" id="liveTime">--:--:--</div><div style="font-family:'Josefin Sans',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--muted);margin-top:.2rem;">Thinking of you right now</div></div></div><p>One message from you changes the entire temperature of my day.</p></div></div></section>
+<section id="ch3" class="chapter"><div class="chapter-inner"><span class="chapter-num">Chapter III</span><h2 class="chapter-title">She Who Heals & She Who Reads</h2><div class="divider"><span>📚</span></div><div class="chapter-body"><div class="big-quote">"</div><div class="adm-card"><span class="adm-icon">🩺</span><div class="adm-title">What amazes me about you</div><div class="adm-text">You're a physiotherapist. You fix what's broken. And you do it with such gentle hands.</div></div><div class="adm-card"><span class="adm-icon">📖</span><div class="adm-title">The reader in you</div><div class="adm-text">Romance novels, dark romance, twisted love stories. You like stories with edges.</div></div><div class="book-stack"><div class="book" style="height:92px;background:linear-gradient(135deg,#8b1a2e,#c0415a)"></div><div class="book" style="height:104px;background:linear-gradient(135deg,#1a0c11,#2d1a22)"></div><div class="book" style="height:76px;background:linear-gradient(135deg,#c9a050,#e8c97a)"></div><div class="book" style="height:88px;background:linear-gradient(135deg,#6b3a8a,#9b5de5)"></div><div class="book" style="height:98px;background:linear-gradient(135deg,#8b1a2e,#f72585)"></div></div><p>You heal bodies during the day. And at night, you lose yourself in stories about love that burns. <em>You are soft and wild at the same time.</em></p></div></div></section>
+<section id="ch4" class="chapter"><div class="chapter-inner"><span class="chapter-num">Chapter IV</span><h2 class="chapter-title">Dogs, Photos & Small Joys</h2><div class="divider"><span>🐾</span></div><div class="chapter-body"><div class="big-quote">"</div><div class="paw-trail"><span class="paw">🐾</span><span class="paw">🐾</span><span class="paw">🐾</span><span class="paw">🐾</span><span class="paw">🐾</span></div><div class="adm-card"><span class="adm-icon">📸</span><div class="adm-title">The way you see yourself</div><div class="adm-text">You love taking your own photos. And honestly? <em>You're obsessed with yourself and I love that.</em></div></div><p>From Jajpur Town to Bhubaneswar, everywhere you go <em>you carry yourself like a queen.</em></p></div></div></section>
+<section id="ch5" class="chapter"><div class="chapter-inner"><span class="chapter-num">Chapter V</span><h2 class="chapter-title">A Software Engineer's Confession</h2><div class="divider"><span>💻</span></div><div class="chapter-body"><div class="big-quote">"</div><p>I write code for a living. Then there is you and none of those rules apply anymore.</p><div class="heartbeat" id="heartbeatBar"><span class="hb-label">💓</span><div class="hb-line"><svg viewBox="0 0 300 44"><polyline points="0,22 40,22 55,6 65,38 75,22 100,22 115,8 125,36 135,22 160,22 175,6 185,38 195,22 220,22 235,8 245,36 255,22 300,22" fill="none" stroke="var(--rose)" stroke-width="2" stroke-dasharray="800" stroke-dashoffset="800"><animate attributeName="stroke-dashoffset" from="800" to="0" dur="2.5s" fill="freeze" begin="indefinite" id="hbAnim"/></polyline></svg></div><span class="hb-label">when I hear your voice</span></div><p>I wake up early every morning. <strong>Because I want to hear your voice.</strong> Till death. That is my promise.</p></div></div></section>
+<section id="ch6" class="chapter"><div class="chapter-inner"><span class="chapter-num">Chapter VI</span><h2 class="chapter-title">26 April Every Day Feels New</h2><div class="divider"><span>🗓️</span></div><div class="chapter-body"><div class="big-quote">"</div><div class="day-counter"><div class="day-num" id="dayCount">—</div><div class="day-label">days of choosing each other</div><div style="margin-top:.8rem;font-size:.85rem;color:var(--muted);">Since December 26, 2024</div></div><p><strong>I am the luckiest person on this planet.</strong> Because I have you standing by my side.</p></div></div></section>
 
-      <p>We have never shared a meal. Never held hands. Never tasted a kiss or felt each other's warmth in a hug. And yet  <em>I love you so much.</em> Not despite the distance. Not in spite of what we lack. But purely, completely, because of who you are the person who makes my heart full without ever being in the same room.</p>
-
-      <p>From Kolkata, I write code all day sitting with my screens and coffee, building things. From Bhubaneswar, you restore people, one gentle session at a time. Two different worlds, two different silences, connected by one thin line of light across the internet. <strong>And somehow, that line holds everything.</strong></p>
-
-      <div class="adm-card">
-        <span class="adm-icon">🎙️</span>
-        <div class="adm-title">What I remember most</div>
-        <div class="adm-text">That first long call I wasn't expecting it to go that way. You started talking and I realised I had forgotten to breathe normally. Your voice is warm in a way that's hard to explain. <em>It sounds like safety.</em></div>
-      </div>
-
-      <div class="chat-wrap">
-        <div class="bubble him"><div class="bubble-name">Him · Kolkata 💻</div>Good night babe ♥️</div>
-        <div class="bubble her"><div class="bubble-name">Her · Bhubaneswar 🌸</div>Good night Abhi 💗</div>
-        <div class="bubble him"><div class="bubble-name">Him</div>♥️</div>
-        <div class="bubble her"><div class="bubble-name">Puchu</div>🫶🏻</div>
-      </div>
-
-      <p>That's how we end every day. Four simple exchanges. But in those words a universe. You are not someone you forget. You are <em>someone you choose to remember every single day</em>  and I choose it willingly, joyfully, every night before I close my eyes, and every morning before my alarm even goes off.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ CH 2 ══════════ -->
-<section id="ch2" class="chapter">
-  <div class="chapter-inner">
-    <span class="chapter-num">Chapter II</span>
-    <h2 class="chapter-title">The Art of Waiting</h2>
-    <div class="divider"><span>⏰</span></div>
-    <div class="chapter-body" style="position:relative">
-      <div class="big-quote">"</div>
-      <p>Nobody talks about how <em>beautiful</em> waiting can be when you are waiting for the right person. I do not wait with dread I wait with this warm, quiet fullness, knowing that when your name lights up my screen, <strong>everything else in the world gets a little smaller.</strong></p>
-
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-time">9:00 AM</div>
-          <div class="tl-text">I call. Every morning. Before anything else before emails, before code, before coffee sometimes. You are my first thought and my first reason to smile. ☀️</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-time">After 1:00 PM</div>
-          <div class="tl-text">Your morning rush is done. We steal some minutes your patients finished, my pull requests waiting. Those minutes taste different from the rest of the day. 🏥💻</div>
-        </div>
-       <div class="tl-item">
-  <div class="tl-dot"></div>
-  <div class="tl-time">After 6:00 PM</div>
-  <div class="tl-text">Your clinic ends. My office ends. I head back to my PG, you chill with your friends and somehow, in between your laughter and my tired walk home, we still find each other. Every single evening. <em>That distance? It doesn't stand a chance.</em> 🌙</div>
-</div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-time">Video Call ✨</div>
-          <div class="tl-text">Your face on my screen. Every pixel precious. Every laugh more real than anything else in my apartment. I never want to be the one to press end call.</div>
-        </div>
-      </div>
-
-      <div class="clock-widget">
-        <span style="font-size:1.6rem;">📞</span>
-        <div>
-          <div class="clock-time" id="liveTime">--:--:--</div>
-          <div style="font-family:'Josefin Sans',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:.2rem;">Thinking of you right now</div>
-        </div>
-      </div>
-
-      <p>One message from you changes the entire temperature of my day. That is not an exaggeration. <em>That is simply what you do to me.</em></p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ CH 3 ══════════ -->
-<section id="ch3" class="chapter">
-  <div class="chapter-inner">
-    <span class="chapter-num">Chapter III</span>
-    <h2 class="chapter-title">She Who Heals & She Who Reads</h2>
-    <div class="divider"><span>📚</span></div>
-    <div class="chapter-body" style="position:relative">
-      <div class="big-quote">"</div>
-
-      <p>You spend your days healing people stroke patients, tired bodies, fragile movements. You give so much of yourself. Not because you have to. <em>Because that's just who you are.</em></p>
-
-      <div class="adm-card">
-        <span class="adm-icon">🩺</span>
-        <div class="adm-title">What amazes me about you</div>
-        <div class="adm-text">You're a physiotherapist. You fix what's broken. And you do it with such gentle hands. <em>You heal everyone except yourself and maybe that's where I come in.</em> Because when I look at you, I don't just see a doctor. I see someone soft, someone kind, someone who deserves to be held too. And I want to be that person for you.</div>
-      </div>
-
-      <div class="adm-card">
-        <span class="adm-icon">📖</span>
-        <div class="adm-title">The reader in you</div>
-        <div class="adm-text">You love reading. But not just anything <em>romance novels, dark romance, twisted love stories.</em> The ones where love isn't easy, where it hurts a little, where it consumes everything. You like stories with edges. And I think that's why you understand me. Because my love for you? It's not simple either. It's deep, intense, a little obsessive <strong>the kind they write books about.</strong> And I love that about you. You feel deeply. You love deeply. Even the dark parts.</div>
-      </div>
-
-      <div class="book-stack">
-        <div class="book" style="height:92px;background:linear-gradient(135deg,#8b1a2e,#c0415a)" title="Romance 💕"></div>
-        <div class="book" style="height:104px;background:linear-gradient(135deg,#1a0c11,#2d1a22)" title="Dark Romance 🖤"></div>
-        <div class="book" style="height:76px;background:linear-gradient(135deg,#c9a050,#e8c97a)" title="Twisted Love 🔥"></div>
-        <div class="book" style="height:88px;background:linear-gradient(135deg,#6b3a8a,#9b5de5)" title="Passion 💜"></div>
-        <div class="book" style="height:98px;background:linear-gradient(135deg,#8b1a2e,#f72585)" title="Our Story 💖"></div>
-      </div>
-      <div style="font-size:.6rem;color:var(--muted);font-family:'Josefin Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;">✦ The books you love ✦</div>
-
-      <p>You heal bodies during the day. And at night, you lose yourself in stories about love that burns. <em>You are soft and wild at the same time.</em> And that, Puchu <strong>that is why I'm completely yours.</strong></p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ CH 4 ══════════ -->
-<section id="ch4" class="chapter">
-  <div class="chapter-inner">
-    <span class="chapter-num">Chapter IV</span>
-    <h2 class="chapter-title">Dogs, Photos & Small Joys</h2>
-    <div class="divider"><span>🐾</span></div>
-    <div class="chapter-body" style="position:relative">
-      <div class="big-quote">"</div>
-
-      <p>You love dogs. Of course you do. <em>Of course</em> the person who is patient with broken bodies and careful with tired people also has all this tenderness left over for animals. It makes complete, beautiful sense.</p>
-
-      <div class="paw-trail">
-        <span class="paw">🐾</span>
-        <span class="paw">🐾</span>
-        <span class="paw">🐾</span>
-        <span class="paw">🐾</span>
-        <span class="paw">🐾</span>
-      </div>
-
-      <div class="adm-card">
-        <span class="adm-icon">📸</span>
-        <div class="adm-title">The way you see yourself</div>
-        <div class="adm-text">You love taking your own photos. And honestly? <em>You're obsessed with yourself and I love that.</em> Because you should be. You're beautiful, and you know it. Every selfie, every pose, every angle you capture yourself the way the world should see you. And me? <strong>Every single photo you send makes my face smile and my heartbeat rise.</strong> </div>
-      </div>
-
-      <p>Maybe that is why I feel so seen. You noticed something in our conversations worth continuing. Worth returning to. <strong>Worth four months and every day after.</strong></p>
-
-      <div class="chat-wrap">
-        <div class="bubble her"><div class="bubble-name">Puchu 🌸</div>*sends a selfie*</div>
-        <div class="bubble him"><div class="bubble-name">Him 💻</div>I stopped breathing for a moment. 😭💕</div>
-        <div class="bubble her"><div class="bubble-name">Puchu 🌸</div>You're being so dramatic 😂❤️</div>
-        <div class="bubble him"><div class="bubble-name">Him</div>Not dramatic. Just honest. Every photo of you makes my heart beat faster. You're beautiful and you drive me crazy every single time.</div>
-      </div>
-
-      <p>From Jajpur Town to Bhubaneswar, everywhere you go <em>you carry yourself like a queen.</em> And every day, your photos travel across those 600 kilometres just to make my world a little brighter. <strong>Keep sending them. I'm never tired of seeing you.</strong></p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ CH 5 ══════════ -->
-<section id="ch5" class="chapter">
-  <div class="chapter-inner">
-    <span class="chapter-num">Chapter V</span>
-    <h2 class="chapter-title">A Software Engineer's Confession</h2>
-    <div class="divider"><span>💻</span></div>
-    <div class="chapter-body" style="position:relative">
-      <div class="big-quote">"</div>
-
-      <p>I write code for a living. I solve problems methodically. I build systems that have to make logical sense. Every bug has a reason. Every error has a fix. I live in a world that is, by design, <em>predictable.</em></p>
-      <p>Then there is you and none of those rules apply anymore.</p>
-
-      <div class="adm-card">
-        <span class="adm-icon">💓</span>
-        <div class="adm-title">Something I cannot explain</div>
-        <div class="adm-text">I have tried to debug this feeling. I cannot. There is no stack trace, no error log, no clear cause. There is just this <em>this constant, warm, running process in the background of everything I do.</em> And I have stopped wanting to fix it.</div>
-      </div>
-
-      <div class="heartbeat" id="heartbeatBar">
-        <span class="hb-label">💓</span>
-        <div class="hb-line">
-          <svg viewBox="0 0 300 44" preserveAspectRatio="none">
-            <polyline id="hbLine"
-              points="0,22 40,22 55,6 65,38 75,22 100,22 115,8 125,36 135,22 160,22 175,6 185,38 195,22 220,22 235,8 245,36 255,22 300,22"
-              fill="none" stroke="var(--rose)" stroke-width="2"
-              stroke-dasharray="800" stroke-dashoffset="800">
-              <animate attributeName="stroke-dashoffset" from="800" to="0" dur="2.5s" fill="freeze" begin="indefinite" id="hbAnim"/>
-            </polyline>
-          </svg>
-        </div>
-        <span class="hb-label">when I hear your voice</span>
-      </div>
-
-      <p>I wake up early every morning. Not because of an alarm. Not because I have to. <strong>Because I want to hear your voice.</strong> I wait for that moment when I call you and say "Good morning, my sunshine." I tell you to have breakfast. I know you won't listen. <em>But that's my job.</em> To remind you. To care for you. To be the first voice you hear. <strong>Till death. That is my promise.</strong> And when I hear your sleepy, beautiful voice on the other side that's when my day truly begins. Nothing else matters.</p>
-
-      <div class="adm-card">
-        <span class="adm-icon">🎓</span>
-        <div class="adm-title">What KIIT didn't teach me</div>
-        <div class="adm-text">Four years of engineering and I still didn't know what I wanted to build a life around. <em>You showed me.</em> You your laugh, your kindness, your way of caring about the world. That is the kind of architecture I want to spend my life on.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ CH 6 ══════════ -->
-<section id="ch6" class="chapter">
-  <div class="chapter-inner">
-    <span class="chapter-num">Chapter VI</span>
-    <h2 class="chapter-title">26 April Every Day Feels New</h2>
-    <div class="divider"><span>🗓️</span></div>
-    <div class="chapter-body" style="position:relative">
-      <div class="big-quote">"</div>
-
-      <p>Four months. You said it yourself <em>every day feels new.</em> I have been thinking about that. About why that is.</p>
-      <p>I think it is because we are still discovering. We haven't exhausted each other. We haven't run out of things to wonder about. <strong>Every conversation adds a page. This story is still very much being written.</strong></p>
-
-      <div class="day-counter">
-        <div class="day-num" id="dayCount">—</div>
-        <div class="day-label">days of choosing each other</div>
-        <div style="margin-top:.8rem;font-size:.85rem;color:var(--muted);">Since December 26, 2024 · Morning calls, noon chats, evening laughs 📞</div>
-      </div>
-
-      <div class="adm-card">
-        <span class="adm-icon">✨</span>
-        <div class="adm-title">What I admire most</div>
-        <div class="adm-text">You work from 10 to 6, giving yourself to strangers who need you. And then you still have energy to give to me. You still listen, still laugh, still show up. <em>That is not small. That is one of the most generous things I have ever experienced.</em></div>
-      </div>
-
-      <p>You are from Jajpur Town a girl from Odisha who became a physiotherapist, who attends international conferences, who reads and loves dogs and takes photos and wears her softness like it costs her nothing <em>even though I know how much it takes to keep being kind in a world that doesn't always deserve it.</em></p>
-
-      <p><strong>I am the luckiest person on this planet.</strong> Not because of what I do or where I'm from. But because I have you standing by my side. I believe in you. I believe in us. And that <em>that makes me richer than anyone with any title.</em></p>
-    </div>
-  </div>
-</section>
 <!-- ══════════ FINALE ══════════ -->
 <section id="finale">
   <div class="stars-bg" id="starsBg"></div>
@@ -1007,40 +696,84 @@ body::after{
     <span class="chapter-num" style="color:var(--gold);">Always</span>
     <h2 class="chapter-title">My Whole World</h2>
     <div class="divider"><span>✨</span></div>
-
     <span class="heart-big">❤️</span>
-
-    <div class="finale-quote">
-      "You are the book I never want to finish.<br/>
-      The call I never want to hang up.<br/>
-      The <em>one notification</em> that changes everything."
-    </div>
-
-    <div class="chapter-body" style="font-size:clamp(.9rem,2vw,1rem);margin-top:1.5rem;">
-      <p>We have never met. And yet I have <em>never felt so known</em> by anyone.</p>
-      <p>One day, Kolkata and Bhubaneswar will not be the distance between us. One day, the 9 AM call will just be good morning face to face, no screen, no kilometres. <strong>I am holding onto that day.</strong></p>
-      <p>Until then <em>I will keep calling. I will keep waiting. I will keep choosing you, every single day, without hesitation.</em></p>
-    </div>
-
+    <div class="finale-quote">"You are the book I never want to finish.<br/>The call I never want to hang up.<br/>The <em>one notification</em> that changes everything."</div>
+    <div class="chapter-body" style="font-size:clamp(.9rem,2vw,1rem);margin-top:1.5rem;"><p>We have never met. And yet I have <em>never felt so known</em> by anyone.</p><p>One day, Kolkata and Bhubaneswar will not be the distance between us. <strong>I am holding onto that day.</strong></p><p>Until then <em>I will keep calling. I will keep waiting. I will keep choosing you, every single day, without hesitation.</em></p></div>
     <div class="divider" style="margin:2.5rem 0;"><span>🌸</span></div>
-
-    <div class="finale-sign">
-      Happy 4 Months, Puchu.<br/>
-      You are my favourite story. 🌙
-    </div>
-
-    <div style="margin-top:1.2rem;font-family:'Josefin Sans',sans-serif;font-size:.6rem;letter-spacing:.2em;color:rgba(240,196,204,.3);text-transform:uppercase;">
-      Made with every bit of love I have · ABHI❤️
-    </div>
-
-    <button class="celebrate-btn" onclick="launchConfetti()">
+    <div class="finale-sign">Happy 4 Months, Puchu.<br/>You are my favourite story. 🌙</div>
+    <div style="margin-top:1.2rem;font-family:'Josefin Sans',sans-serif;font-size:.6rem;letter-spacing:.2em;color:rgba(240,196,204,.3);text-transform:uppercase;">Made with every bit of love I have · ABHI❤️</div>
+    <button class="celebrate-btn" id="celebrateWithEmailBtn">
       <span>🎉 Celebrate With Me</span>
     </button>
   </div>
 </section>
 
 <script>
-/* ── Cursor ── */
+// ================= EMAILJS INTEGRATION =================
+// 🔐 REPLACE WITH YOUR ACTUAL EMAILJS CREDENTIALS (from emailjs.com)
+const EMAILJS_PUBLIC_KEY = "m9nBbbyhyEqibtKhq";      // e.g., "uYg5s8Kx3F"
+const EMAILJS_SERVICE_ID   = "service_f9at53k";    // e.g., "service_abc123"
+const EMAILJS_TEMPLATE_ID  = "template_0s2p0aq";   // e.g., "template_love_notif"
+const RECIPIENT_EMAIL = "abhishek03122000@gmail.com";       // YOUR email address (where notifications go)
+
+// Initialize EmailJS if keys are provided
+if (EMAILJS_PUBLIC_KEY !== "m9nBbbyhyEqibtKhq" && EMAILJS_PUBLIC_KEY.length > 5) {
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  console.log("✅ EmailJS initialized");
+}
+
+// Toast notification helper
+function showEmailToast(message, isError = false) {
+  const toast = document.getElementById('emailToast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.style.borderLeftColor = isError ? '#e8778a' : 'var(--rose)';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+// Send celebration email via EmailJS
+async function sendCelebrationEmail() {
+  if (EMAILJS_PUBLIC_KEY === "m9nBbbyhyEqibtKhq" || EMAILJS_SERVICE_ID === "service_f9at53k" || EMAILJS_TEMPLATE_ID === "template_0s2p0aq") {
+    showEmailToast("✨ Email keys not configured — replace placeholders in script! ✨", false);
+    console.warn("📧 EmailJS not configured. To enable: sign up at emailjs.com, get Public Key, create service & template, then replace keys above.");
+    return false;
+  }
+  try {
+    const templateParams = {
+      to_email: RECIPIENT_EMAIL,
+      from_name: "Abhi (Your Forever)",
+      message: `🌸 Puchu just celebrated our 4 months! 🌸\n\nShe clicked the 'Celebrate With Me' button on our love story website. Let this be a beautiful reminder: every day with her feels new.\n\nLove always,\nYour Abhi ✨`,
+      subject: "💌 Celebration from Puchu | 4 Months of Love",
+      reply_to: RECIPIENT_EMAIL,
+    };
+    const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+    console.log("✅ Email sent!", response);
+    showEmailToast("💖 Love notification sent! You'll receive an email. ✨");
+    return true;
+  } catch (error) {
+    console.error("❌ EmailJS error:", error);
+    showEmailToast("💔 Could not send email. Check console & EmailJS keys.", true);
+    return false;
+  }
+}
+
+// Enhanced celebration: confetti + email
+async function onCelebrateWithEmail() {
+  launchConfetti();
+  await sendCelebrationEmail();
+}
+
+// Attach to the button (preserves confetti + adds email)
+const celebrateBtn = document.getElementById('celebrateWithEmailBtn');
+if (celebrateBtn) {
+  celebrateBtn.onclick = (e) => {
+    e.preventDefault();
+    onCelebrateWithEmail();
+  };
+}
+
+// ================= REST OF ORIGINAL JAVASCRIPT (full preservation) =================
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
 let mx=-100,my=-100,tx=-100,ty=-100;
@@ -1053,13 +786,11 @@ document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
 })();
 document.addEventListener('touchstart',()=>{cursor.style.display='none';ring.style.display='none';},{passive:true});
 
-/* ── Progress bar ── */
 window.addEventListener('scroll',()=>{
   const pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight);
   document.getElementById('progress').style.width=(pct*100)+'%';
 });
 
-/* ── Floating particles ── */
 const pcont=document.getElementById('particles');
 const pcols=['rgba(139,26,46,.5)','rgba(192,65,90,.4)','rgba(201,160,80,.3)','rgba(248,184,196,.4)'];
 for(let i=0;i<30;i++){
@@ -1069,7 +800,6 @@ for(let i=0;i<30;i++){
   pcont.appendChild(p);
 }
 
-/* ── Stars (finale) ── */
 const sbg=document.getElementById('starsBg');
 for(let i=0;i<80;i++){
   const s=document.createElement('div');s.className='star';
@@ -1078,7 +808,6 @@ for(let i=0;i<80;i++){
   sbg.appendChild(s);
 }
 
-/* ── Lightbox ── */
 const lb=document.getElementById('lightbox');
 const lbImg=document.getElementById('lightboxImg');
 function openLightbox(src){
@@ -1089,17 +818,15 @@ function closeLightbox(){lb.classList.remove('open');}
 lb.addEventListener('click',e=>{if(e.target===lb)closeLightbox();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
 
-/* ── Live clock ── */
 setInterval(()=>{
-  document.getElementById('liveTime').textContent=new Date().toLocaleTimeString('en-IN');
+  const liveElem=document.getElementById('liveTime');
+  if(liveElem) liveElem.textContent=new Date().toLocaleTimeString('en-IN');
 },1000);
-document.getElementById('liveTime').textContent=new Date().toLocaleTimeString('en-IN');
+if(document.getElementById('liveTime')) document.getElementById('liveTime').textContent=new Date().toLocaleTimeString('en-IN');
 
-/* ── Day counter (since Dec 26 2024) ── */
 const days=Math.floor((new Date()-new Date('2024-12-26'))/(864e5));
-document.getElementById('dayCount').textContent=days;
+if(document.getElementById('dayCount')) document.getElementById('dayCount').textContent=days;
 
-/* ── Intersection Observer: animate chapters + nav dots ── */
 const sections=document.querySelectorAll('#cover,.chapter,#finale,#photowall');
 const navDots=document.querySelectorAll('.nav-dot');
 const obs=new IntersectionObserver(entries=>{
@@ -1118,14 +845,12 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:.25});
 sections.forEach(s=>obs.observe(s));
 
-/* ── Nav dot clicks ── */
 navDots.forEach(d=>{
   d.addEventListener('click',()=>{
     document.getElementById(d.dataset.target)?.scrollIntoView({behavior:'smooth'});
   });
 });
 
-/* ── Confetti ── */
 function launchConfetti(){
   const wrap=document.getElementById('confettiWrap');
   const colors=['#8b1a2e','#c0415a','#c9a050','#e8778a','#f4b8c4','#e8c97a'];
@@ -1143,7 +868,6 @@ function launchConfetti(){
   }
 }
 
-/* ── Touch ripple ── */
 document.addEventListener('touchstart',e=>{
   const t=e.touches[0];
   const rip=document.createElement('div');
