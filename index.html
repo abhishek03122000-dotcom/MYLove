@@ -710,17 +710,15 @@ body::after{
 
 <script>
 // ================= EMAILJS INTEGRATION =================
-// 🔐 REPLACE WITH YOUR ACTUAL EMAILJS CREDENTIALS (from emailjs.com)
-const EMAILJS_PUBLIC_KEY = "m9nBbbyhyEqibtKhq";      // e.g., "uYg5s8Kx3F"
-const EMAILJS_SERVICE_ID   = "service_f9at53k";    // e.g., "service_abc123"
-const EMAILJS_TEMPLATE_ID  = "template_0s2p0aq";   // e.g., "template_love_notif"
-const RECIPIENT_EMAIL = "abhishek03122000@gmail.com";       // YOUR email address (where notifications go)
+// 🔐 YOUR ACTUAL EMAILJS CREDENTIALS (already configured)
+const EMAILJS_PUBLIC_KEY = "m9nBbbyhyEqibtKhq";
+const EMAILJS_SERVICE_ID   = "service_f9at53k";
+const EMAILJS_TEMPLATE_ID  = "template_0s2p0aq";
+const RECIPIENT_EMAIL = "abhishek03122000@gmail.com";
 
-// Initialize EmailJS if keys are provided
-if (EMAILJS_PUBLIC_KEY !== "m9nBbbyhyEqibtKhq" && EMAILJS_PUBLIC_KEY.length > 5) {
-  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-  console.log("✅ EmailJS initialized");
-}
+// Initialize EmailJS (keys are valid - no placeholder check needed)
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+console.log("✅ EmailJS initialized with your keys!");
 
 // Toast notification helper
 function showEmailToast(message, isError = false) {
@@ -734,11 +732,6 @@ function showEmailToast(message, isError = false) {
 
 // Send celebration email via EmailJS
 async function sendCelebrationEmail() {
-  if (EMAILJS_PUBLIC_KEY === "m9nBbbyhyEqibtKhq" || EMAILJS_SERVICE_ID === "service_f9at53k" || EMAILJS_TEMPLATE_ID === "template_0s2p0aq") {
-    showEmailToast("✨ Email keys not configured — replace placeholders in script! ✨", false);
-    console.warn("📧 EmailJS not configured. To enable: sign up at emailjs.com, get Public Key, create service & template, then replace keys above.");
-    return false;
-  }
   try {
     const templateParams = {
       to_email: RECIPIENT_EMAIL,
@@ -749,11 +742,13 @@ async function sendCelebrationEmail() {
     };
     const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
     console.log("✅ Email sent!", response);
-    showEmailToast("💖 Love notification sent! You'll receive an email. ✨");
+    showEmailToast("💖 Love notification sent! Check your email. ✨");
     return true;
   } catch (error) {
     console.error("❌ EmailJS error:", error);
-    showEmailToast("💔 Could not send email. Check console & EmailJS keys.", true);
+    let errorMsg = "💔 Could not send email. ";
+    if (error.text) errorMsg += error.text;
+    showEmailToast(errorMsg, true);
     return false;
   }
 }
@@ -772,7 +767,6 @@ if (celebrateBtn) {
     onCelebrateWithEmail();
   };
 }
-
 // ================= REST OF ORIGINAL JAVASCRIPT (full preservation) =================
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
