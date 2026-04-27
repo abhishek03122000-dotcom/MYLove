@@ -735,9 +735,9 @@ async function sendCelebrationEmail() {
   try {
     const templateParams = {
       to_email: RECIPIENT_EMAIL,
-      from_name: "Abhi (Your Forever)",
-      message: `🌸 Puchu just celebrated our 4 months! 🌸\n\nShe clicked the 'Celebrate With Me' button on our love story website. Let this be a beautiful reminder: every day with her feels new.\n\nLove always,\nYour Abhi ✨`,
-      subject: "💌 Celebration from Puchu | 4 Months of Love",
+      from_name: "Puchu (Your Forever)",
+      message: `🌸 Puchu just celebrated! 🌸\n\nShe clicked the 'Celebrate With Me' button on our love story website. Let this be a beautiful reminder: every day with her feels new.\n\nLove always,\nYour Abhi ✨`,
+      subject: "💌 Celebration from Puchu",
       reply_to: RECIPIENT_EMAIL,
     };
     const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
